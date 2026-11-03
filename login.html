@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPoint Café — Staff Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { display: flex; align-items: center; justify-content: center; }
+  .login-card {
+    width: 340px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+  }
+  .login-mark { text-align: center; margin-bottom: 26px; }
+  .login-mark .brand-mark { font-size: 1.4rem; }
+  .login-mark .brand-sub { display: block; margin-top: 4px; }
+  .login-error {
+    background: var(--status-occupied-bg);
+    color: var(--status-occupied);
+    font-size: 0.8rem;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+    display: none;
+  }
+  .login-error.show { display: block; }
+  .login-btn { width: 100%; margin-top: 4px; }
+  .login-hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+  <div class="login-card">
+    <div class="login-mark">
+      <div class="brand-mark">NetPoint<span>.</span></div>
+      <span class="brand-sub">Staff Terminal</span>
+    </div>
+
+    <div class="login-error" id="loginError"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary login-btn" id="loginBtn">Log in</button>
+    </form>
+
+    <div class="login-hint">New staff? <a href="signup.html" style="color:var(--accent);">Create an account</a></div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

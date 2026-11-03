@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPoint Café — Manage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .manage-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-elevated);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+  .manage-tabs button {
+    background: transparent; border: none; color: var(--text-muted);
+    padding: 8px 18px; border-radius: var(--radius-sm); font-size: 0.875rem; cursor: pointer;
+  }
+  .manage-tabs button.active { background: var(--surface-hover); color: var(--accent); }
+  .add-btn {
+    background: var(--accent); border: 1px solid var(--accent); color: #1A1300;
+    font-weight: 600; padding: 9px 16px; border-radius: var(--radius-sm);
+    font-size: 0.85rem; cursor: pointer;
+  }
+  .add-btn:hover { background: #FFC61A; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+  .data-table th {
+    text-align: left; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-faint); padding: 10px 14px; border-bottom: 1px solid var(--border);
+  }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+  .data-table td.mono { font-family: var(--font-mono); color: var(--text-primary); }
+  .data-table tr:hover td { background: var(--surface); }
+  .row-actions { display: flex; gap: 6px; }
+  .row-actions button {
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+    padding: 5px 10px; border-radius: var(--radius-sm); font-size: 0.75rem; cursor: pointer;
+  }
+  .row-actions .edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .row-actions .delete-btn:hover { border-color: var(--status-occupied); color: var(--status-occupied); }
+  .tiny-status {
+    font-family: var(--font-mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 20px;
+  }
+  .tiny-status.status-Available { color: var(--status-available); background: var(--status-available-bg); }
+  .tiny-status.status-Occupied { color: var(--status-occupied); background: var(--status-occupied-bg); }
+  .tiny-status.status-Maintenance { color: var(--status-maintenance); background: var(--status-maintenance-bg); }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">NetPoint<span>.</span></div>
+      <span class="brand-sub">Manage</span>
+    </div>
+    <div class="nav-tabs">
+      <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+      <button class="active">Manage</button>
+      <button onclick="window.location.href='pos.html'">POS</button>
+    </div>
+    <div class="user-chip">
+      <span class="user-name">Signed in as <strong id="staffName">—</strong></span>
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="manage-tabs">
+      <button id="tabComputers" class="active">Computers</button>
+      <button id="tabCustomers">Customers</button>
+    </div>
+
+    <!-- Computers panel -->
+    <section id="panelComputers">
+      <div class="section-head">
+        <h2>Computers</h2>
+        <button class="add-btn" id="addComputerBtn">+ Add Computer</button>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Number</th><th>Name</th><th>Specs</th><th>Rate/hr</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="computersBody">
+          <tr class="empty-row"><td colspan="6">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Customers panel -->
+    <section id="panelCustomers" style="display:none;">
+      <div class="section-head">
+        <h2>Customers</h2>
+        <button class="add-btn" id="addCustomerBtn">+ Add Customer</button>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Name</th><th>Contact</th><th>Email</th><th>Wallet</th><th></th></tr>
+        </thead>
+        <tbody id="customersBody">
+          <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Computer add/edit modal -->
+  <div class="modal-overlay" id="computerModal" hidden>
+    <div class="modal">
+      <h3 id="computerModalTitle">Add Computer</h3>
+      <p class="modal-sub">Station details</p>
+      <div class="field"><label>Computer Number</label><input type="text" id="cf_number" placeholder="PC-11"></div>
+      <div class="field"><label>Display Name</label><input type="text" id="cf_name" placeholder="Station 11"></div>
+      <div class="field"><label>Specifications</label><input type="text" id="cf_specs" placeholder="Intel i5, 8GB RAM"></div>
+      <div class="field"><label>Hourly Rate</label><input type="number" id="cf_rate" step="0.01" min="0" placeholder="20.00"></div>
+      <div class="field">
+        <label>Status</label>
+        <select id="cf_status">
+          <option value="Available">Available</option>
+          <option value="Occupied">Occupied</option>
+          <option value="Maintenance">Maintenance</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="computerCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="computerSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer add/edit modal -->
+  <div class="modal-overlay" id="customerModal" hidden>
+    <div class="modal">
+      <h3 id="customerModalTitle">Add Customer</h3>
+      <p class="modal-sub">Customer details</p>
+      <div class="field"><label>Full Name</label><input type="text" id="cu_name" placeholder="Jose Rizal"></div>
+      <div class="field"><label>Contact Number</label><input type="text" id="cu_contact" placeholder="09171234567"></div>
+      <div class="field"><label>Email</label><input type="email" id="cu_email" placeholder="jose@example.com"></div>
+      <div class="modal-actions">
+        <button class="btn" id="customerCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="customerSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wallet load modal -->
+  <div class="modal-overlay" id="walletModal" hidden>
+    <div class="modal">
+      <h3>Load Wallet</h3>
+      <p class="modal-sub" id="walletModalSub"></p>
+      <div class="field"><label>Amount to add</label><input type="number" id="wf_amount" step="0.01" min="0.01" placeholder="100.00"></div>
+      <div class="field"><label>Note (optional)</label><input type="text" id="wf_note" placeholder="Counter top-up"></div>
+      <div class="modal-actions">
+        <button class="btn" id="walletCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="walletSaveBtn">Load</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/manage.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPoint Café — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { display: flex; align-items: center; justify-content: center; }
+  .login-card {
+    width: 340px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+  }
+  .login-mark { text-align: center; margin-bottom: 26px; }
+  .login-mark .brand-mark { font-size: 1.4rem; }
+  .login-mark .brand-sub { display: block; margin-top: 4px; }
+  .signup-error {
+    background: var(--status-occupied-bg);
+    color: var(--status-occupied);
+    font-size: 0.8rem;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+    display: none;
+  }
+  .signup-error.show { display: block; }
+  .login-btn { width: 100%; margin-top: 4px; }
+  .login-hint {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+  }
+</style>
+</head>
+<body>
+
+  <div class="login-card">
+    <div class="login-mark">
+      <div class="brand-mark">NetPoint<span>.</span></div>
+      <span class="brand-sub">Create staff account</span>
+    </div>
+
+    <div class="login-error" id="signupError"></div>
+
+    <form id="signupForm">
+      <div class="field">
+        <label for="name">Full name</label>
+        <input type="text" id="name" autocomplete="name" maxlength="100" required>
+      </div>
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username" minlength="3" maxlength="50" required>
+      </div>
+      <div class="field">
+        <label for="password">Password (min 8 characters)</label>
+        <input type="password" id="password" autocomplete="new-password" minlength="8" required>
+      </div>
+      <div class="field">
+        <label for="confirm">Confirm password</label>
+        <input type="password" id="confirm" autocomplete="new-password" minlength="8" required>
+      </div>
+      <div class="field">
+        <label for="signup_code">Staff signup code</label>
+        <input type="password" id="signup_code" autocomplete="off" required>
+      </div>
+      <button type="submit" class="btn btn-primary login-btn" id="signupBtn">Create account</button>
+    </form>
+
+    <div class="login-hint">Already have an account? <a href="login.html" style="color:var(--accent);">Log in</a></div>
+  </div>
+
+  <script src="js/signup.js"></script>
+</body>
+</html>

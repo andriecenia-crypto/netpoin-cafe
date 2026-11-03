@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPoint Café — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">NetPoint<span>.</span></div>
+      <span class="brand-sub">Rental Console</span>
+    </div>
+    <div class="nav-tabs">
+      <button class="active">Dashboard</button>
+      <button onclick="window.location.href='manage.html'">Manage</button>
+      <button onclick="window.location.href='pos.html'">POS</button>
+    </div>
+    <div class="user-chip">
+      <span class="user-name">Signed in as <strong id="staffName">—</strong></span>
+      <button class="logout-btn" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+
+  <main>
+    <section>
+      <div class="section-head">
+        <h2>Stations</h2>
+        <span class="section-count" id="stationCount"></span>
+      </div>
+      <div class="station-grid" id="stationGrid">
+        <p class="state-msg">Loading stations…</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Recent Rentals</h2>
+        <span class="section-count" id="historyCount"></span>
+      </div>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>PC</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+            <th>Duration</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr class="empty-row"><td colspan="7">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Rent modal -->
+  <div class="modal-overlay" id="rentModal" hidden>
+    <div class="modal">
+      <h3 id="rentModalTitle">Start Rental</h3>
+      <p class="modal-sub" id="rentModalSub"></p>
+      <div class="field">
+        <label for="customerSelect">Customer (optional)</label>
+        <select id="customerSelect">
+          <option value="">Walk-in / no account</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="rentCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="rentConfirmBtn">Start Rental</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout modal -->
+  <div class="modal-overlay" id="checkoutModal" hidden>
+    <div class="modal">
+      <h3>End Rental</h3>
+      <p class="modal-sub" id="checkoutModalSub">Confirm to check out and calculate the bill.</p>
+      <div class="receipt" id="checkoutReceipt" style="display:none;"></div>
+      <div class="modal-actions">
+        <button class="btn" id="checkoutCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="checkoutConfirmBtn">End Rental</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
